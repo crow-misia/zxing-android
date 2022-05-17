@@ -1,5 +1,6 @@
 package io.crow.misia.crow_misia.zxing.analysis
 
+import android.util.Log
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import com.google.zxing.BinaryBitmap
@@ -12,18 +13,27 @@ import com.google.zxing.common.HybridBinarizer
 import com.google.zxing.multi.MultipleBarcodeReader
 import com.google.zxing.multi.qrcode.QRCodeMultiReader
 import io.github.crow_misia.libyuv.ext.ImageProxyExt.toI400Buffer
+import io.github.crow_misia.zxing.analysis.ReaderWrapper
 import java.util.*
+import kotlin.concurrent.getOrSet
 
 typealias BarcodeDetectListener = (image: ImageProxy, results: Array<Result>) -> Unit
 
 class BarcodeAnalyzer(
-    private val reader: Reader,
-    private val hints: Map<DecodeHintType, Any>? = null,
+    readerProvider: () -> Reader,
+    hints: Map<DecodeHintType, Any>? = null,
     listener: BarcodeDetectListener? = null,
 ) : ImageAnalysis.Analyzer {
-    private val listeners = ArrayList<BarcodeDetectListener>().apply { listener?.let { add(it) } }
-    private val frameRateWindow = 8
-    private val frameTimestamps = ArrayDeque<Long>(5)
+    private val wrappedReader = ThreadLocal.withInitial { ReaderWrapper.wrap(readerProvider(), hints) }
+    private val listeners = linkedSetOf<BarcodeDetectListener>().apply { listener?.let { add(it) } }
+
+    fun addListener(listener: BarcodeDetectListener) {
+        listeners.add(listener)
+    }
+
+    fun removeListener(listener: BarcodeDetectListener) {
+        listeners.remove(listener)
+    }
 
     override fun analyze(image: ImageProxy) {
         if (listeners.isEmpty()) {
@@ -34,11 +44,9 @@ class BarcodeAnalyzer(
         image.toI400Buffer().use {
             val luminanceSource = PlanarLuminanceSource(buffer = it)
             val bitmap = luminanceSource.toBitmap()
-
-            bitmap.decode()?.also { results ->
-                listeners.forEach {
-                    it(image, results)
-                }
+            val results = bitmap.decode()
+            listeners.forEach {
+                it(image, results)
             }
         }
 
@@ -49,20 +57,12 @@ class BarcodeAnalyzer(
         return BinaryBitmap(HybridBinarizer(this))
     }
 
-    private fun BinaryBitmap.decode(): Array<Result>? {
+    private fun BinaryBitmap.decode(): Array<Result> {
+        val reader = wrappedReader.get()!!
         return try {
-            if (reader is MultipleBarcodeReader) {
-                reader.decodeMultiple(this)
-            } else {
-                val result = if (reader is MultiFormatReader) {
-                    reader.decodeWithState(this)
-                } else {
-                    reader.decode(this)
-                }
-                result?.let { arrayOf(it) }
-            }
+            reader.decode(this)
         } catch (e: Exception) {
-            null
+            emptyArray()
         } finally {
             reader.reset()
         }

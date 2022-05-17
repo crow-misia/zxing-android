@@ -4,7 +4,7 @@ import java.net.URI
 
 plugins {
     id("com.android.library")
-    kotlin("android")
+    id("kotlin-android")
     id("org.jetbrains.dokka")
     id("signing")
     id("maven-publish")
@@ -15,7 +15,7 @@ object Maven {
     const val artifactId = "zxing-android"
     const val name = "zxing-android"
     const val desc = "ZXing for Android"
-    const val version = "0.0.1"
+    const val version = "0.0.2"
     const val siteUrl = "https://github.com/crow-misia/zxing-android"
     const val gitUrl = "https://github.com/crow-misia/zxing-android.git"
     const val licenseName = "The Apache Software License, Version 2.0"

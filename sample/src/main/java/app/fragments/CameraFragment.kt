@@ -25,6 +25,7 @@ import app.databinding.CameraUiContainerBinding
 import app.databinding.FragmentCameraBinding
 import com.google.zxing.DecodeHintType
 import com.google.zxing.multi.qrcode.QRCodeMultiReader
+import com.google.zxing.qrcode.QRCodeReader
 import io.crow.misia.crow_misia.zxing.analysis.BarcodeAnalyzer
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -174,6 +175,7 @@ class CameraFragment : Fragment() {
         Log.d(TAG, "Preview aspect ratio: $screenAspectRatio")
 
         val rotation = fragmentCameraBinding.viewFinder.display.rotation
+        Log.d(TAG, "Rotation: $rotation")
 
         // CameraProvider
         val cameraProvider = cameraProvider
@@ -203,24 +205,23 @@ class CameraFragment : Fragment() {
 
         // ImageAnalysis
         imageAnalyzer = ImageAnalysis.Builder()
-            // We request aspect ratio but no resolution
             .setTargetAspectRatio(screenAspectRatio)
-            // Set initial target rotation, we will have to call this again if rotation changes
-            // during the lifecycle of this use case
             .setTargetRotation(rotation)
             .setOutputImageRotationEnabled(false)
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_BLOCK_PRODUCER)
             .setImageQueueDepth(8)
             .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_YUV_420_888)
             .build()
-            // The analyzer can then be assigned to the instance
             .also {
-                val hints = mutableMapOf<DecodeHintType, Any>()
-                hints[DecodeHintType.TRY_HARDER] = true
-                val reader = QRCodeMultiReader()
-                it.setAnalyzer(cameraExecutor, BarcodeAnalyzer(reader, hints) { _, results ->
-                    Log.d(TAG, "Barcode detect result: ${results.joinToString()}")
-                })
+                it.setAnalyzer(cameraExecutor, BarcodeAnalyzer(
+                    readerProvider = { QRCodeReader() },
+                    hints = null,
+                    listener = { _, results ->
+                        if (results.isNotEmpty()) {
+                            Log.d(TAG, "Barcode detect result: ${results.joinToString()}")
+                        }
+                    }
+                ))
             }
 
         // Must unbind the use-cases before rebinding them

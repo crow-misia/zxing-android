@@ -31,7 +31,7 @@ repository {
 ## License
 
 ```
-Copyright 2012, ZXing authors.
+Copyright 2008, ZXing authors.
 Copyright 2022, Zenichi Amano.
 
 Licensed under the Apache License, Version 2.0 (the "License");

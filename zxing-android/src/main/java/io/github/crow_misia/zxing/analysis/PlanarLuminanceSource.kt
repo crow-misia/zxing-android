@@ -3,6 +3,7 @@ package io.crow.misia.crow_misia.zxing.analysis
 import com.google.zxing.LuminanceSource
 import com.google.zxing.PlanarYUVLuminanceSource
 import io.github.crow_misia.libyuv.I400Buffer
+import kotlin.concurrent.getOrSet
 
 class PlanarLuminanceSource(
     buffer: I400Buffer,
@@ -11,18 +12,19 @@ class PlanarLuminanceSource(
         private val cachedBuffer = ThreadLocal<ByteArray>()
     }
 
-    private val bufferSize = width * height
-    private val buffer = cachedBuffer.get()?.let {
+    private val dataWidth = buffer.planes[0].rowStride
+    private val bufferSize = dataWidth * height
+    private val buffer = cachedBuffer.getOrSet {
+        ByteArray(bufferSize).also { newBuffer ->
+            cachedBuffer.set(newBuffer)
+        }
+    }.let {
         if (it.size < bufferSize) {
             ByteArray(bufferSize).also { newBuffer ->
                 cachedBuffer.set(newBuffer)
             }
         } else {
             it
-        }
-    } ?: run {
-        ByteArray(bufferSize).also { newBuffer ->
-            cachedBuffer.set(newBuffer)
         }
     }
 
@@ -32,7 +34,7 @@ class PlanarLuminanceSource(
 
     override fun getRow(y: Int, row: ByteArray?): ByteArray {
         require(!(y < 0 || y >= height)) { "Requested row is outside the image: $y" }
-        val width = width
+        val width = dataWidth
         val result = if (row == null || row.size < width) {
             ByteArray(width)
         } else {
