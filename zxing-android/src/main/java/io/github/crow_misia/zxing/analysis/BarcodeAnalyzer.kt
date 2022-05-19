@@ -20,11 +20,11 @@ import kotlin.concurrent.getOrSet
 typealias BarcodeDetectListener = (image: ImageProxy, results: Array<Result>) -> Unit
 
 class BarcodeAnalyzer(
-    readerProvider: () -> Reader,
-    hints: Map<DecodeHintType, Any>? = null,
+    private val readerProvider: () -> Reader,
+    private val hints: Map<DecodeHintType, Any>? = null,
     listener: BarcodeDetectListener? = null,
 ) : ImageAnalysis.Analyzer {
-    private val wrappedReader = ThreadLocal.withInitial { ReaderWrapper.wrap(readerProvider(), hints) }
+    private val wrappedReader = ThreadLocal<ReaderWrapper>()
     private val listeners = linkedSetOf<BarcodeDetectListener>().apply { listener?.let { add(it) } }
 
     fun addListener(listener: BarcodeDetectListener) {
@@ -58,7 +58,7 @@ class BarcodeAnalyzer(
     }
 
     private fun BinaryBitmap.decode(): Array<Result> {
-        val reader = wrappedReader.get()!!
+        val reader = wrappedReader.getOrSet { ReaderWrapper.wrap(readerProvider(), hints) }
         return try {
             reader.decode(this)
         } catch (e: Exception) {
