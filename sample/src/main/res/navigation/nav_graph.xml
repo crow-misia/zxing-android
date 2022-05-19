@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/camera_fragment"
-        android:name="app.fragments.CameraFragment"
+        android:name="app.fragments.BarcodeFragment"
         android:label="CameraFragment">
     </fragment>
 

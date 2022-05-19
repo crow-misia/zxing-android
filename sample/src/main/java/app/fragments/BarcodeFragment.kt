@@ -19,12 +19,9 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.window.layout.WindowMetricsCalculator
 import app.databinding.CameraUiContainerBinding
-import app.databinding.FragmentCameraBinding
-import com.google.zxing.DecodeHintType
-import com.google.zxing.multi.qrcode.QRCodeMultiReader
+import app.databinding.FragmentBarcodeBinding
 import com.google.zxing.qrcode.QRCodeReader
 import io.crow.misia.crow_misia.zxing.analysis.BarcodeAnalyzer
 import java.util.concurrent.ExecutorService
@@ -33,15 +30,13 @@ import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
-class CameraFragment : Fragment() {
+class BarcodeFragment : Fragment() {
 
-    private var _fragmentCameraBinding: FragmentCameraBinding? = null
+    private var _fragmentCameraBinding: FragmentBarcodeBinding? = null
 
-    private val fragmentCameraBinding get() = _fragmentCameraBinding!!
+    private val fragmentBarcodeBinding get() = _fragmentCameraBinding!!
 
     private var cameraUiContainerBinding: CameraUiContainerBinding? = null
-
-    private lateinit var broadcastManager: LocalBroadcastManager
 
     private var displayId: Int = -1
     private var lensFacing: Int = CameraSelector.LENS_FACING_BACK
@@ -67,7 +62,7 @@ class CameraFragment : Fragment() {
         override fun onDisplayAdded(displayId: Int) = Unit
         override fun onDisplayRemoved(displayId: Int) = Unit
         override fun onDisplayChanged(displayId: Int) = view?.let { view ->
-            if (displayId == this@CameraFragment.displayId) {
+            if (displayId == this@BarcodeFragment.displayId) {
                 Log.d(TAG, "Rotation changed: ${view.display.rotation}")
                 imageCapture?.targetRotation = view.display.rotation
                 imageAnalyzer?.targetRotation = view.display.rotation
@@ -91,8 +86,8 @@ class CameraFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _fragmentCameraBinding = FragmentCameraBinding.inflate(inflater, container, false)
-        return fragmentCameraBinding.root
+        _fragmentCameraBinding = FragmentBarcodeBinding.inflate(inflater, container, false)
+        return fragmentBarcodeBinding.root
     }
 
     @SuppressLint("MissingPermission")
@@ -102,16 +97,14 @@ class CameraFragment : Fragment() {
         // Initialize our background executor
         cameraExecutor = Executors.newFixedThreadPool(4)
 
-        broadcastManager = LocalBroadcastManager.getInstance(view.context)
-
         // Every time the orientation of device changes, update rotation for use cases
         displayManager.registerDisplayListener(displayListener, null)
 
         // Wait for the views to be properly laid out
-        fragmentCameraBinding.viewFinder.post {
+        fragmentBarcodeBinding.viewFinder.post {
 
             // Keep track of the display in which this view is attached
-            displayId = fragmentCameraBinding.viewFinder.display.displayId
+            displayId = fragmentBarcodeBinding.viewFinder.display.displayId
 
             // Build UI controls
             updateCameraUi()
@@ -174,7 +167,7 @@ class CameraFragment : Fragment() {
         val screenAspectRatio = aspectRatio(metrics.width(), metrics.height())
         Log.d(TAG, "Preview aspect ratio: $screenAspectRatio")
 
-        val rotation = fragmentCameraBinding.viewFinder.display.rotation
+        val rotation = fragmentBarcodeBinding.viewFinder.display.rotation
         Log.d(TAG, "Rotation: $rotation")
 
         // CameraProvider
@@ -233,7 +226,7 @@ class CameraFragment : Fragment() {
             camera = cameraProvider.bindToLifecycle(viewLifecycleOwner, cameraSelector, preview, imageCapture, imageAnalyzer)
 
             // Attach the viewfinder's surface provider to preview use case
-            preview?.setSurfaceProvider(fragmentCameraBinding.viewFinder.surfaceProvider)
+            preview?.setSurfaceProvider(fragmentBarcodeBinding.viewFinder.surfaceProvider)
         } catch (e: Exception) {
             Log.e(TAG, "Use case binding failed", e)
         }
@@ -263,12 +256,12 @@ class CameraFragment : Fragment() {
 
         // Remove previous UI if any
         cameraUiContainerBinding?.root?.let {
-            fragmentCameraBinding.root.removeView(it)
+            fragmentBarcodeBinding.root.removeView(it)
         }
 
         cameraUiContainerBinding = CameraUiContainerBinding.inflate(
             LayoutInflater.from(requireContext()),
-            fragmentCameraBinding.root,
+            fragmentBarcodeBinding.root,
             true
         )
 
