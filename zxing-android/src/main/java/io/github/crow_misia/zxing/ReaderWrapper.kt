@@ -1,4 +1,4 @@
-package io.github.crow_misia.zxing.analysis
+package io.github.crow_misia.zxing
 
 import com.google.zxing.BinaryBitmap
 import com.google.zxing.DecodeHintType

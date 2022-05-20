@@ -1,4 +1,4 @@
-package io.crow.misia.crow_misia.zxing.analysis
+package io.github.crow_misia.zxing
 
 import com.google.zxing.LuminanceSource
 import com.google.zxing.PlanarYUVLuminanceSource

@@ -14,8 +14,8 @@ import androidx.camera.core.Camera
 import androidx.camera.core.CameraInfoUnavailableException
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.ImageCapture
 import androidx.camera.core.Preview
+import androidx.camera.core.SurfaceOrientedMeteringPointFactory
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -23,12 +23,15 @@ import androidx.window.layout.WindowMetricsCalculator
 import app.databinding.CameraUiContainerBinding
 import app.databinding.FragmentBarcodeBinding
 import com.google.zxing.qrcode.QRCodeReader
-import io.crow.misia.crow_misia.zxing.analysis.BarcodeAnalyzer
+import io.github.crow_misia.zxing.BarcodeAnalyzer
+import io.github.crow_misia.zxing.DefaultDecoderFactory
+import io.github.crow_misia.zxing.autoFocusInterval
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.time.Duration.Companion.seconds
 
 class BarcodeFragment : Fragment() {
 
@@ -41,7 +44,6 @@ class BarcodeFragment : Fragment() {
     private var displayId: Int = -1
     private var lensFacing: Int = CameraSelector.LENS_FACING_BACK
     private var preview: Preview? = null
-    private var imageCapture: ImageCapture? = null
     private var imageAnalyzer: ImageAnalysis? = null
     private var camera: Camera? = null
     private var cameraProvider: ProcessCameraProvider? = null
@@ -64,7 +66,6 @@ class BarcodeFragment : Fragment() {
         override fun onDisplayChanged(displayId: Int) = view?.let { view ->
             if (displayId == this@BarcodeFragment.displayId) {
                 Log.d(TAG, "Rotation changed: ${view.display.rotation}")
-                imageCapture?.targetRotation = view.display.rotation
                 imageAnalyzer?.targetRotation = view.display.rotation
             }
         } ?: Unit
@@ -95,7 +96,7 @@ class BarcodeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Initialize our background executor
-        cameraExecutor = Executors.newFixedThreadPool(4)
+        cameraExecutor = Executors.newSingleThreadExecutor()
 
         // Every time the orientation of device changes, update rotation for use cases
         displayManager.registerDisplayListener(displayListener, null)
@@ -185,30 +186,19 @@ class BarcodeFragment : Fragment() {
             .setTargetRotation(rotation)
             .build()
 
-        // ImageCapture
-        imageCapture = ImageCapture.Builder()
-            .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
-            // We request aspect ratio but no resolution to match preview config, but letting
-            // CameraX optimize for whatever specific resolution best fits our use cases
-            .setTargetAspectRatio(screenAspectRatio)
-            // Set initial target rotation, we will have to call this again if rotation changes
-            // during the lifecycle of this use case
-            .setTargetRotation(rotation)
-            .build()
+        val decoderFactory = DefaultDecoderFactory(readerProvider = { QRCodeReader() })
 
         // ImageAnalysis
         imageAnalyzer = ImageAnalysis.Builder()
             .setTargetAspectRatio(screenAspectRatio)
             .setTargetRotation(rotation)
             .setOutputImageRotationEnabled(false)
-            .setBackpressureStrategy(ImageAnalysis.STRATEGY_BLOCK_PRODUCER)
-            .setImageQueueDepth(8)
+            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_YUV_420_888)
             .build()
             .also {
                 it.setAnalyzer(cameraExecutor, BarcodeAnalyzer(
-                    readerProvider = { QRCodeReader() },
-                    hints = null,
+                    decoderFactory = decoderFactory,
                     listener = { _, results ->
                         if (results.isNotEmpty()) {
                             Log.d(TAG, "Barcode detect result: ${results.joinToString()}")
@@ -223,10 +213,15 @@ class BarcodeFragment : Fragment() {
         try {
             // A variable number of use-cases can be passed here -
             // camera provides access to CameraControl & CameraInfo
-            camera = cameraProvider.bindToLifecycle(viewLifecycleOwner, cameraSelector, preview, imageCapture, imageAnalyzer)
-
-            // Attach the viewfinder's surface provider to preview use case
-            preview?.setSurfaceProvider(fragmentBarcodeBinding.viewFinder.surfaceProvider)
+            camera = cameraProvider.bindToLifecycle(viewLifecycleOwner, cameraSelector, preview, imageAnalyzer).also {
+                // Attach the viewfinder's surface provider to preview use case
+                fragmentBarcodeBinding.viewFinder.also { previewView ->
+                    val meteringPoint = SurfaceOrientedMeteringPointFactory(1.0f, 1.0f)
+                        .createPoint(0.5f, 0.5f)
+                    it.cameraControl.autoFocusInterval(previewView, 1.seconds, meteringPoint)
+                    preview?.setSurfaceProvider(previewView.surfaceProvider)
+                }
+            }
         } catch (e: Exception) {
             Log.e(TAG, "Use case binding failed", e)
         }
