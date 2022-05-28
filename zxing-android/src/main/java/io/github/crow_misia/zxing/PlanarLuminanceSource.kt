@@ -12,7 +12,8 @@ class PlanarLuminanceSource(
         private val cachedBuffer = ThreadLocal<ByteArray>()
     }
 
-    private val dataWidth = buffer.planes[0].rowStride
+    private val dataWidth = buffer.planeY.rowStride
+    private val dataHeight = buffer.height
     private val bufferSize = dataWidth * height
     private val buffer = cachedBuffer.getOrSet {
         ByteArray(bufferSize).also { newBuffer ->
@@ -53,6 +54,6 @@ class PlanarLuminanceSource(
     override fun isCropSupported(): Boolean = true
 
     override fun crop(left: Int, top: Int, width: Int, height: Int): LuminanceSource {
-        return PlanarYUVLuminanceSource(buffer, width, height, left, top, width, height, false)
+        return PlanarYUVLuminanceSource(buffer, dataWidth, dataHeight, left, top, width, height, false)
     }
 }
