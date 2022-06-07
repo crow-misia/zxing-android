@@ -89,7 +89,7 @@ dependencies {
 
     androidTestImplementation(AndroidX.test.runner)
     androidTestImplementation(AndroidX.test.rules)
-    androidTestImplementation(AndroidX.test.ext.junitKtx)
+    androidTestImplementation(AndroidX.test.ext.junit.ktx)
     androidTestImplementation(AndroidX.test.ext.truth)
     androidTestImplementation("com.google.truth:truth:_")
 }
