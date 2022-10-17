@@ -6,13 +6,14 @@ plugins {
 }
 
 android {
-    buildToolsVersion = "32.0.0"
-    compileSdk = 32
+    buildToolsVersion = "33.0.0"
+    compileSdk = 33
 
     defaultConfig {
+        namespace = "app"
         applicationId = "com.github.crow_misia.zxing_android"
         minSdk = 23
-        targetSdk = 32
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -36,9 +37,9 @@ android {
     kotlin {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = "1.8"
-            apiVersion = "1.6"
-            languageVersion = "1.6"
+            jvmTarget = "11"
+            apiVersion = "1.7"
+            languageVersion = "1.7"
         }
     }
 
@@ -59,7 +60,7 @@ dependencies {
     implementation(AndroidX.activity.ktx)
     implementation(AndroidX.appCompat)
     implementation(AndroidX.fragment.ktx)
-    implementation(AndroidX.lifecycle.runtimeKtx)
+    implementation(AndroidX.lifecycle.runtime.ktx)
     implementation(AndroidX.constraintLayout)
     implementation(AndroidX.window)
 

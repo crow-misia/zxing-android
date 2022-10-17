@@ -1,6 +1,5 @@
 package app
 
-import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -33,13 +32,14 @@ class MainActivity : AppCompatActivity() {
         }, IMMERSIVE_FLAG_TIMEOUT)
     }
 
+    @Suppress("OVERRIDE_DEPRECATION")
     override fun onBackPressed() {
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
-            // Workaround for Android Q memory leak issue in IRequestFinishCallback$Stub.
-            // (https://issuetracker.google.com/issues/139738913)
-            finishAfterTransition()
-        } else {
+        // Workaround for Android Q memory leak issue in IRequestFinishCallback$Stub.
+        // (https://issuetracker.google.com/issues/139738913)
+        if (onBackPressedDispatcher.hasEnabledCallbacks()) {
             super.onBackPressed()
+        } else {
+            finishAfterTransition()
         }
     }
 

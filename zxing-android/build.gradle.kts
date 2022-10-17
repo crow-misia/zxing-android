@@ -15,7 +15,7 @@ object Maven {
     const val artifactId = "zxing-android"
     const val name = "zxing-android"
     const val desc = "ZXing for Android"
-    const val version = "0.1.1"
+    const val version = "0.2.0"
     const val siteUrl = "https://github.com/crow-misia/zxing-android"
     const val gitUrl = "https://github.com/crow-misia/zxing-android.git"
     const val licenseName = "The Apache Software License, Version 2.0"
@@ -28,10 +28,11 @@ group = Maven.groupId
 version = Maven.version
 
 android {
-    buildToolsVersion = "32.0.0"
-    compileSdk = 32
+    buildToolsVersion = "33.0.0"
+    compileSdk = 33
 
     defaultConfig {
+        namespace = "io.github.crow_misia.zxing_android"
         minSdk = 21
         consumerProguardFiles("consumer-proguard-rules.pro")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -70,9 +71,9 @@ android {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
             javaParameters = true
-            jvmTarget = "1.8"
-            apiVersion = "1.6"
-            languageVersion = "1.6"
+            jvmTarget = "11"
+            apiVersion = "1.7"
+            languageVersion = "1.7"
         }
     }
 }
@@ -84,14 +85,14 @@ dependencies {
     implementation(AndroidX.constraintLayout)
     implementation(AndroidX.camera.core)
 
-    api("io.github.crow-misia.libyuv:libyuv-android:_")
-    api("com.google.zxing:core:_")
+    api(libs.libyuv.android)
+    api(libs.com.google.zxing.core)
 
     androidTestImplementation(AndroidX.test.runner)
     androidTestImplementation(AndroidX.test.rules)
     androidTestImplementation(AndroidX.test.ext.junit.ktx)
     androidTestImplementation(AndroidX.test.ext.truth)
-    androidTestImplementation("com.google.truth:truth:_")
+    androidTestImplementation(libs.truth)
 }
 
 val sourcesJar by tasks.creating(Jar::class) {
@@ -106,7 +107,7 @@ val customDokkaTask by tasks.creating(DokkaTask::class) {
         noAndroidSdkLink.set(false)
     }
     dependencies {
-        plugins("org.jetbrains.dokka:javadoc-plugin:_")
+        plugins(libs.javadoc.plugin)
     }
     inputs.dir("src/main/java")
     outputDirectory.set(buildDir.resolve("javadoc"))

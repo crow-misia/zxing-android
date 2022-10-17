@@ -7,7 +7,7 @@ buildscript {
     dependencies {
         classpath(Android.tools.build.gradlePlugin)
         classpath(AndroidX.navigation.safeArgsGradlePlugin)
-        classpath("org.jetbrains.dokka:dokka-gradle-plugin:_")
+        classpath(libs.dokka.gradle.plugin)
     }
 }
 
