@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    buildToolsVersion = "33.0.0"
+    buildToolsVersion = "33.0.1"
     compileSdk = 33
 
     defaultConfig {

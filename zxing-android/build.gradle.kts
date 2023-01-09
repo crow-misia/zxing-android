@@ -1,5 +1,7 @@
-import com.android.build.gradle.*
 import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 import java.net.URI
 
 plugins {
@@ -15,7 +17,7 @@ object Maven {
     const val artifactId = "zxing-android"
     const val name = "zxing-android"
     const val desc = "ZXing for Android"
-    const val version = "0.3.0"
+    const val version = "0.4.0"
     const val siteUrl = "https://github.com/crow-misia/zxing-android"
     const val gitUrl = "https://github.com/crow-misia/zxing-android.git"
     const val licenseName = "The Apache Software License, Version 2.0"
@@ -28,7 +30,7 @@ group = Maven.groupId
 version = Maven.version
 
 android {
-    buildToolsVersion = "33.0.0"
+    buildToolsVersion = "33.0.1"
     compileSdk = 33
 
     defaultConfig {
@@ -47,34 +49,20 @@ android {
             enabled = false
         }
     }
+}
 
-    buildTypes {
-        debug {
-            isJniDebuggable = false
-        }
-        release {
-            isJniDebuggable = false
-        }
-    }
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
 
-    externalNativeBuild {
-    }
-    ndkVersion = "24.0.8215888"
-
-    sourceSets {
-        getByName("androidTest").manifest {
-            srcFile("src/androidTest/AndroidManifest.xml")
-        }
-    }
-
-    kotlin {
-        kotlinOptions {
-            freeCompilerArgs = listOf("-Xjsr305=strict")
-            javaParameters = true
-            jvmTarget = "11"
-            apiVersion = "1.7"
-            languageVersion = "1.7"
-        }
+tasks.withType<KotlinJvmCompile>().all {
+    compilerOptions {
+        freeCompilerArgs.addAll("-Xjsr305=strict")
+        javaParameters.set(true)
+        jvmTarget.set(JvmTarget.JVM_11)
+        apiVersion.set(KotlinVersion.KOTLIN_1_8)
+        languageVersion.set(KotlinVersion.KOTLIN_1_8)
     }
 }
 
