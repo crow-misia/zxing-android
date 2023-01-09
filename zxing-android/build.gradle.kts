@@ -49,11 +49,11 @@ android {
             enabled = false
         }
     }
-}
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
 }
 
 tasks.withType<KotlinJvmCompile>().all {
@@ -73,7 +73,6 @@ dependencies {
     implementation(AndroidX.constraintLayout)
     implementation(AndroidX.camera.core)
 
-    api(libs.libyuv.android)
     api(libs.com.google.zxing.core)
 
     androidTestImplementation(AndroidX.test.runner)

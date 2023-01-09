@@ -3,7 +3,6 @@ package io.github.crow_misia.zxing
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import com.google.zxing.Result
-import io.github.crow_misia.libyuv.ext.ImageProxyExt.toI400Buffer
 import kotlin.concurrent.getOrSet
 
 typealias BarcodeDetectListener = (image: ImageProxy, results: Array<Result>) -> Unit
@@ -14,11 +13,7 @@ class BarcodeAnalyzer(
 ) : ImageAnalysis.Analyzer {
     private val decoder = ThreadLocal<Decoder>()
     private val listeners = linkedSetOf<BarcodeDetectListener>().apply { listener?.let { add(it) } }
-    private var enabled: Boolean = true
-
-    fun setEnabled(enabled: Boolean) {
-        this.enabled = enabled
-    }
+    var enabled: Boolean = true
 
     fun addListener(listener: BarcodeDetectListener) {
         listeners.add(listener)
@@ -34,13 +29,18 @@ class BarcodeAnalyzer(
             return
         }
 
-        image.toI400Buffer().use {
-            val source = PlanarLuminanceSource(buffer = it)
-            val decoder = decoder.getOrSet { decoderFactory.createDecoder(emptyMap()) }
-            val results = decoder.decode(source)
-            listeners.forEach {
-                it(image, results)
-            }
+        val plane = image.planes[0]
+        val source = PlanarLuminanceSource(
+            buffer = plane.buffer,
+            width = image.width,
+            height = image.height,
+            dataWidth = plane.rowStride,
+            dataHeight = image.height,
+        )
+        val decoder = decoder.getOrSet { decoderFactory.createDecoder(emptyMap()) }
+        val results = decoder.decode(source)
+        listeners.forEach {
+            it(image, results)
         }
 
         image.close()

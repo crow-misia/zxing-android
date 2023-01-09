@@ -2,18 +2,20 @@ package io.github.crow_misia.zxing
 
 import com.google.zxing.LuminanceSource
 import com.google.zxing.PlanarYUVLuminanceSource
-import io.github.crow_misia.libyuv.I400Buffer
+import java.nio.ByteBuffer
 import kotlin.concurrent.getOrSet
 
 class PlanarLuminanceSource(
-    buffer: I400Buffer,
-) : LuminanceSource(buffer.width, buffer.height) {
+    buffer: ByteBuffer,
+    width: Int,
+    height: Int,
+    private val dataWidth: Int,
+    private val dataHeight: Int,
+) : LuminanceSource(width, height) {
     companion object {
         private val cachedBuffer = ThreadLocal<ByteArray>()
     }
 
-    private val dataWidth = buffer.planeY.rowStride
-    private val dataHeight = buffer.height
     private val bufferSize = dataWidth * height
     private val buffer = cachedBuffer.getOrSet {
         ByteArray(bufferSize).also { newBuffer ->
@@ -30,7 +32,7 @@ class PlanarLuminanceSource(
     }
 
     init {
-        buffer.asByteArray(this.buffer)
+        buffer.get(this.buffer)
     }
 
     override fun getRow(y: Int, row: ByteArray?): ByteArray {

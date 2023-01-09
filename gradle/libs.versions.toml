@@ -24,8 +24,6 @@ kotlin-annotation-processing-gradle = { group = "org.jetbrains.kotlin", name = "
 
 truth = "com.google.truth:truth:1.1.3"
 
-libyuv-android = "io.github.crow-misia.libyuv:libyuv-android:0.23.0"
-
 com-google-zxing-core = "com.google.zxing:core:3.5.1"
 
 dokka-base = "org.jetbrains.dokka:dokka-base:1.7.20"
