@@ -3,6 +3,7 @@ package io.github.crow_misia.zxing
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import com.google.zxing.Result
+import java.nio.BufferUnderflowException
 import kotlin.concurrent.getOrSet
 
 typealias BarcodeDetectListener = (image: ImageProxy, results: Array<Result>) -> Unit
@@ -29,6 +30,7 @@ class BarcodeAnalyzer(
             return
         }
 
+        try {
         val plane = image.planes[0]
         val source = PlanarLuminanceSource(
             buffer = plane.buffer,
@@ -42,7 +44,10 @@ class BarcodeAnalyzer(
         listeners.forEach {
             it(image, results)
         }
-
+        } catch (e: BufferUnderflowException) {
+            // ignore.
+        } finally {
         image.close()
     }
+}
 }
