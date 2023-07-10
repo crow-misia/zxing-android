@@ -9,13 +9,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.camera.core.AspectRatio
 import androidx.camera.core.Camera
 import androidx.camera.core.CameraInfoUnavailableException
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.core.SurfaceOrientedMeteringPointFactory
+import androidx.camera.core.resolutionselector.AspectRatioStrategy
+import androidx.camera.core.resolutionselector.ResolutionSelector
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -181,7 +182,11 @@ class BarcodeFragment : Fragment() {
         // Preview
         preview = Preview.Builder()
             // We request aspect ratio but no resolution
-            .setTargetAspectRatio(screenAspectRatio)
+            .setResolutionSelector(
+                ResolutionSelector.Builder()
+                    .setAspectRatioStrategy(screenAspectRatio)
+                    .build()
+            )
             // Set initial target rotation
             .setTargetRotation(rotation)
             .build()
@@ -190,7 +195,11 @@ class BarcodeFragment : Fragment() {
 
         // ImageAnalysis
         imageAnalyzer = ImageAnalysis.Builder()
-            .setTargetAspectRatio(screenAspectRatio)
+            .setResolutionSelector(
+                ResolutionSelector.Builder()
+                    .setAspectRatioStrategy(screenAspectRatio)
+                    .build()
+            )
             .setTargetRotation(rotation)
             .setOutputImageRotationEnabled(false)
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
@@ -236,14 +245,14 @@ class BarcodeFragment : Fragment() {
      *
      *  @param width - preview width
      *  @param height - preview height
-     *  @return suitable aspect ratio
+     *  @return suitable aspect ratio strategy
      */
-    private fun aspectRatio(width: Int, height: Int): Int {
+    private fun aspectRatio(width: Int, height: Int): AspectRatioStrategy {
         val previewRatio = max(width, height).toDouble() / min(width, height)
         if (abs(previewRatio - RATIO_4_3_VALUE) <= abs(previewRatio - RATIO_16_9_VALUE)) {
-            return AspectRatio.RATIO_4_3
+            return AspectRatioStrategy.RATIO_4_3_FALLBACK_AUTO_STRATEGY
         }
-        return AspectRatio.RATIO_16_9
+        return AspectRatioStrategy.RATIO_16_9_FALLBACK_AUTO_STRATEGY
     }
 
     /** Method used to re-draw the camera UI controls, called every time configuration changes. */

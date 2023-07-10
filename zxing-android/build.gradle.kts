@@ -1,15 +1,13 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
-import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
-import java.net.URI
 
 plugins {
     id("com.android.library")
-    id("kotlin-android")
     id("org.jetbrains.dokka")
     id("signing")
     id("maven-publish")
+    kotlin("android")
 }
 
 object Maven {
@@ -17,7 +15,7 @@ object Maven {
     const val artifactId = "zxing-android"
     const val name = "zxing-android"
     const val desc = "ZXing for Android"
-    const val version = "0.4.0"
+    const val version = "0.5.0"
     const val siteUrl = "https://github.com/crow-misia/zxing-android"
     const val gitUrl = "https://github.com/crow-misia/zxing-android.git"
     const val licenseName = "The Apache Software License, Version 2.0"
@@ -30,8 +28,7 @@ group = Maven.groupId
 version = Maven.version
 
 android {
-    buildToolsVersion = "33.0.1"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         namespace = "io.github.crow_misia.zxing_android"
@@ -56,13 +53,13 @@ android {
     }
 }
 
-tasks.withType<KotlinJvmCompile>().all {
+kotlin {
     compilerOptions {
         freeCompilerArgs.addAll("-Xjsr305=strict")
         javaParameters.set(true)
         jvmTarget.set(JvmTarget.JVM_11)
-        apiVersion.set(KotlinVersion.KOTLIN_1_8)
-        languageVersion.set(KotlinVersion.KOTLIN_1_8)
+        apiVersion.set(KotlinVersion.KOTLIN_1_9)
+        languageVersion.set(KotlinVersion.KOTLIN_1_9)
     }
 }
 
@@ -162,14 +159,12 @@ afterEvaluate {
         }
         repositories {
             maven {
-                val releasesRepoUrl = URI("https://oss.sonatype.org/service/local/staging/deploy/maven2")
-                val snapshotsRepoUrl = URI("https://oss.sonatype.org/content/repositories/snapshots")
+                val releasesRepoUrl = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2")
+                val snapshotsRepoUrl = uri("https://oss.sonatype.org/content/repositories/snapshots")
                 url = if (Maven.version.endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
-                val sonatypeUsername: String? by project
-                val sonatypePassword: String? by project
                 credentials {
-                    username = sonatypeUsername.orEmpty()
-                    password = sonatypePassword.orEmpty()
+                    username = project.findProperty("sona.user") as String? ?: providers.environmentVariable("SONA_USER").orNull
+                    password = project.findProperty("sona.password") as String? ?: providers.environmentVariable("SONA_PASSWORD").orNull
                 }
             }
         }
