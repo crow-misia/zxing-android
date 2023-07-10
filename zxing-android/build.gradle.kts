@@ -51,6 +51,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
 }
 
 kotlin {
@@ -77,13 +83,6 @@ dependencies {
     androidTestImplementation(AndroidX.test.ext.junit.ktx)
     androidTestImplementation(AndroidX.test.ext.truth)
     androidTestImplementation(libs.truth)
-}
-
-val sourcesJar by tasks.creating(Jar::class) {
-    group = JavaBasePlugin.DOCUMENTATION_GROUP
-    description = "Assembles sources JAR"
-    archiveClassifier.set("sources")
-    from(sourceSets.create("main").allSource)
 }
 
 val customDokkaTask by tasks.creating(DokkaTask::class) {
@@ -121,7 +120,6 @@ afterEvaluate {
                     |    Version: $version
                 """.trimMargin())
 
-                artifact(sourcesJar)
                 artifact(javadocJar)
 
                 pom {
@@ -171,6 +169,7 @@ afterEvaluate {
     }
 
     signing {
+        useGpgCmd()
         sign(publishing.publications.getByName("maven"))
     }
 }
