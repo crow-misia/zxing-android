@@ -146,7 +146,7 @@ class BarcodeFragment : Fragment() {
             lensFacing = when {
                 hasBackCamera() -> CameraSelector.LENS_FACING_BACK
                 hasFrontCamera() -> CameraSelector.LENS_FACING_FRONT
-                else -> throw IllegalStateException("Back and front camera are unavailable")
+                else -> error("Back and front camera are unavailable")
             }
 
             // Enable or disable switching between cameras
@@ -173,8 +173,9 @@ class BarcodeFragment : Fragment() {
         Log.d(TAG, "Rotation: $rotation")
 
         // CameraProvider
-        val cameraProvider = cameraProvider
-            ?: throw IllegalStateException("Camera initialization failed.")
+        val cameraProvider = checkNotNull(cameraProvider) {
+            "Camera initialization failed."
+        }
 
         // CameraSelector
         val cameraSelector = CameraSelector.Builder().requireLensFacing(lensFacing).build()

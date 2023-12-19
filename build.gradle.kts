@@ -1,17 +1,14 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    kotlin("android") apply false
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.detekt) apply false
+    alias(libs.plugins.dokka) apply false
+    alias(libs.plugins.kotlin.android) apply false
 }
 
 buildscript {
     dependencies {
-        classpath(Android.tools.build.gradlePlugin)
-        classpath(AndroidX.navigation.safeArgsGradlePlugin)
-        classpath(libs.dokka.gradle.plugin)
+        classpath(libs.androidx.navigation.safeargs.plugin)
     }
-}
-
-val clean by tasks.creating(Delete::class) {
-    group = "build"
-    delete(rootProject.buildDir)
 }

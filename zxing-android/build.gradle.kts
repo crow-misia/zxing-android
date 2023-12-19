@@ -3,11 +3,12 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.dokka")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.dokka)
+    alias(libs.plugins.kotlin.android)
     id("signing")
     id("maven-publish")
-    kotlin("android")
 }
 
 object Maven {
@@ -28,10 +29,10 @@ group = Maven.groupId
 version = Maven.version
 
 android {
+    namespace = "io.github.crow_misia.zxing_android"
     compileSdk = 34
 
     defaultConfig {
-        namespace = "io.github.crow_misia.zxing_android"
         minSdk = 21
         consumerProguardFiles("consumer-proguard-rules.pro")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -39,12 +40,8 @@ android {
 
     lint {
         textReport = true
-    }
-
-    libraryVariants.all {
-        generateBuildConfigProvider?.configure {
-            enabled = false
-        }
+        checkDependencies = true
+        baseline = file("lint-baseline.xml")
     }
 
     compileOptions {
@@ -69,19 +66,27 @@ kotlin {
     }
 }
 
-dependencies {
-    implementation(Kotlin.stdlib)
-    implementation(AndroidX.annotation)
+detekt {
+    parallel = true
+    buildUponDefaultConfig = true
+    allRules = false
+    autoCorrect = true
+    config.setFrom(files("$rootDir/config/detekt.yml"))
+}
 
-    implementation(AndroidX.constraintLayout)
-    implementation(AndroidX.camera.core)
+dependencies {
+    compileOnly(libs.kotlin.stdlib)
+    compileOnly(libs.androidx.annotation)
+
+    compileOnly(libs.androidx.camera.core)
 
     api(libs.com.google.zxing.core)
 
-    androidTestImplementation(AndroidX.test.runner)
-    androidTestImplementation(AndroidX.test.rules)
-    androidTestImplementation(AndroidX.test.ext.junit.ktx)
-    androidTestImplementation(AndroidX.test.ext.truth)
+    androidTestImplementation(libs.androidx.test.ext.junit.ktx)
+    androidTestImplementation(libs.androidx.test.espresso.core)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.rules)
+    androidTestImplementation(libs.androidx.test.ext.truth)
     androidTestImplementation(libs.truth)
 }
 
@@ -90,10 +95,10 @@ val customDokkaTask by tasks.creating(DokkaTask::class) {
         noAndroidSdkLink.set(false)
     }
     dependencies {
-        plugins(libs.javadoc.plugin)
+        plugins(libs.dokka.javadoc.plugin)
     }
     inputs.dir("src/main/java")
-    outputDirectory.set(buildDir.resolve("javadoc"))
+    outputDirectory.set(layout.buildDirectory.dir("javadoc"))
 }
 
 val javadocJar by tasks.creating(Jar::class) {
@@ -161,8 +166,8 @@ afterEvaluate {
                 val snapshotsRepoUrl = uri("https://oss.sonatype.org/content/repositories/snapshots")
                 url = if (Maven.version.endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
                 credentials {
-                    username = project.findProperty("sona.user") as String? ?: providers.environmentVariable("SONA_USER").orNull
-                    password = project.findProperty("sona.password") as String? ?: providers.environmentVariable("SONA_PASSWORD").orNull
+                    username = providers.gradleProperty("sona.user").orElse(providers.environmentVariable("SONA_USER")).orNull
+                    password = providers.gradleProperty("sona.password").orElse(providers.environmentVariable("SONA_PASSWORD")).orNull
                 }
             }
         }

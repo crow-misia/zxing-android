@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.2.0" type="baseline" client="gradle" dependencies="true" name="AGP (8.2.0)" variant="all" version="8.2.0">
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@android:color/black` with a theme that also paints a background (inferred theme is `@style/AppTheme`)"
+        errorLine1="    android:background=&quot;@android:color/black&quot;>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_barcode.xml"
+            line="21"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.colorPrimary` appears to be unused"
+        errorLine1="    &lt;color name=&quot;colorPrimary&quot;>#3F51B5&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="17"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.colorPrimaryDark` appears to be unused"
+        errorLine1="    &lt;color name=&quot;colorPrimaryDark&quot;>#303F9F&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="18"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.colorAccent` appears to be unused"
+        errorLine1="    &lt;color name=&quot;colorAccent&quot;>#FF4081&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="19"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.margin_xsmall` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;margin_xsmall&quot;>16dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="18"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.margin_medium` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;margin_medium&quot;>48dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="20"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.margin_large` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;margin_large&quot;>64dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="21"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.spacing_medium` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;spacing_medium&quot;>8dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="25"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.spacing_large` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;spacing_large&quot;>16dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="26"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.stroke_small` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;stroke_small&quot;>4dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="28"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.stroke_medium` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;stroke_medium&quot;>8dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="29"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.stroke_large` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;stroke_large&quot;>12dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="30"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.round_button_small` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;round_button_small&quot;>32dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="32"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.round_button_large` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;round_button_large&quot;>92dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="34"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.rect_button_margin` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;rect_button_margin&quot;>12dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="36"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.rect_button_width` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;rect_button_width&quot;>80dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="37"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.rect_button_height` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;rect_button_height&quot;>24dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="38"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.shutter_button_margin` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;shutter_button_margin&quot;>40dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="39"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.ic_launcher_background` appears to be unused"
+        errorLine1="    &lt;color name=&quot;ic_launcher_background&quot;>#FFFFFF&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/ic_launcher_background.xml"
+            line="3"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.capture_button_alt` appears to be unused"
+        errorLine1="    &lt;string name=&quot;capture_button_alt&quot;>Capture&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="4"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.back_button_alt` appears to be unused"
+        errorLine1="    &lt;string name=&quot;back_button_alt&quot;>Back&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="7"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.share_button_alt` appears to be unused"
+        errorLine1="    &lt;string name=&quot;share_button_alt&quot;>Share&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="8"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.share_hint` appears to be unused"
+        errorLine1="    &lt;string name=&quot;share_hint&quot;>Share using&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="9"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.capture_mode_camera` appears to be unused"
+        errorLine1="    &lt;string name=&quot;capture_mode_camera&quot;>Camera&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="10"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.capture_mode_hdr` appears to be unused"
+        errorLine1="    &lt;string name=&quot;capture_mode_hdr&quot;>HDR&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="11"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.capture_mode_night` appears to be unused"
+        errorLine1="    &lt;string name=&quot;capture_mode_night&quot;>Night&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="12"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MonochromeLauncherIcon"
+        message="The application adaptive icon is missing a monochrome tag"
+        errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/mipmap-anydpi-v26/ic_launcher.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="MonochromeLauncherIcon"
+        message="The application adaptive roundIcon is missing a monochrome tag"
+        errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+</issues>

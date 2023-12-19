@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>SwallowedException:BarcodeAnalyzer.kt$BarcodeAnalyzer$e: BufferUnderflowException</ID>
+    <ID>SwallowedException:Decoder.kt$Decoder$e: Throwable</ID>
+    <ID>TooGenericExceptionCaught:Decoder.kt$Decoder$e: Throwable</ID>
+  </CurrentIssues>
+</SmellBaseline>

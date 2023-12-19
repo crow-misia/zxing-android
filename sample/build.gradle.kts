@@ -1,7 +1,10 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+
 plugins {
-    id("com.android.application")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.detekt)
     id("androidx.navigation.safeargs.kotlin")
 }
 
@@ -16,20 +19,22 @@ android {
         versionCode = 1
         versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
     }
 
     lint {
         textReport = true
+        checkDependencies = true
+        baseline = file("lint-baseline.xml")
     }
 
     buildTypes {
         debug {
             isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
         release {
             isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 
@@ -47,51 +52,58 @@ kotlin {
     compilerOptions {
         freeCompilerArgs.addAll("-Xjsr305=strict")
         javaParameters.set(true)
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
-        apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_1_9)
-        languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_1_9)
+        jvmTarget.set(JvmTarget.JVM_11)
+        apiVersion.set(KotlinVersion.KOTLIN_1_9)
+        languageVersion.set(KotlinVersion.KOTLIN_1_9)
     }
+}
+
+detekt {
+    parallel = true
+    buildUponDefaultConfig = true
+    allRules = false
+    autoCorrect = true
+    config.setFrom(files("$rootDir/config/detekt.yml"))
 }
 
 dependencies {
     implementation(project(":zxing-android"))
 
-    implementation(Kotlin.stdlib)
-    implementation(KotlinX.coroutines.android)
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.kotlinx.coroutines.android)
 
-    implementation(AndroidX.core.ktx)
+    implementation(libs.androidx.core.ktx)
 
     // App compat and UI things
-    implementation(AndroidX.activity.ktx)
-    implementation(AndroidX.appCompat)
-    implementation(AndroidX.fragment.ktx)
-    implementation(AndroidX.lifecycle.runtime.ktx)
-    implementation(AndroidX.constraintLayout)
-    implementation(AndroidX.window)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.lifecycle.runtime)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.window)
 
     // Navigation library
-    implementation(AndroidX.navigation.fragmentKtx)
-    implementation(AndroidX.navigation.uiKtx)
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
 
     // CameraX
-    implementation(AndroidX.camera.core)
-    implementation(AndroidX.camera.camera2)
-    implementation(AndroidX.camera.lifecycle)
-    implementation(AndroidX.camera.view)
+    implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
 
     // Unit testing
-    testImplementation(AndroidX.test.ext.junit)
-    testImplementation(AndroidX.test.rules)
-    testImplementation(AndroidX.test.runner)
-    testImplementation(AndroidX.test.espresso.core)
-    testImplementation(Testing.junit4)
-    testImplementation(Testing.robolectric)
+    testImplementation(libs.androidx.test.ext.junit.ktx)
+    testImplementation(libs.androidx.test.rules)
+    testImplementation(libs.androidx.test.runner)
+    testImplementation(libs.androidx.test.espresso.core)
+    testImplementation(libs.junit4)
+    testImplementation(libs.robolectric)
 
     // Instrumented testing
-    androidTestImplementation(AndroidX.test.ext.junit)
-    androidTestImplementation(AndroidX.test.core)
-    androidTestImplementation(AndroidX.test.rules)
-    androidTestImplementation(AndroidX.test.runner)
-    androidTestImplementation(AndroidX.test.espresso.core)
-    androidTestImplementation(Testing.junit4)
+    androidTestImplementation(libs.androidx.test.ext.junit.ktx)
+    androidTestImplementation(libs.androidx.test.rules)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.espresso.core)
+    androidTestImplementation(libs.junit4)
 }

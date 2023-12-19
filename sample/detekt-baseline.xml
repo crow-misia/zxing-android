@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>MagicNumber:BarcodeFragment.kt$BarcodeFragment$0.5f</ID>
+    <ID>SwallowedException:BarcodeFragment.kt$BarcodeFragment$e: CameraInfoUnavailableException</ID>
+    <ID>TooGenericExceptionCaught:BarcodeFragment.kt$BarcodeFragment$e: Exception</ID>
+  </CurrentIssues>
+</SmellBaseline>
