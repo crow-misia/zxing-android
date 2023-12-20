@@ -16,7 +16,7 @@ object Maven {
     const val artifactId = "zxing-android"
     const val name = "zxing-android"
     const val desc = "ZXing for Android"
-    const val version = "0.5.0"
+    const val version = "0.6.0"
     const val siteUrl = "https://github.com/crow-misia/zxing-android"
     const val gitUrl = "https://github.com/crow-misia/zxing-android.git"
     const val licenseName = "The Apache Software License, Version 2.0"
