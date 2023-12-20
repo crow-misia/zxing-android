@@ -44,6 +44,19 @@ android {
         baseline = file("lint-baseline.xml")
     }
 
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+        unitTests.all {
+            it.useJUnitPlatform()
+            it.testLogging {
+                showStandardStreams = true
+                events("passed", "skipped", "failed")
+            }
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -64,14 +77,6 @@ kotlin {
         apiVersion.set(KotlinVersion.KOTLIN_1_9)
         languageVersion.set(KotlinVersion.KOTLIN_1_9)
     }
-}
-
-detekt {
-    parallel = true
-    buildUponDefaultConfig = true
-    allRules = false
-    autoCorrect = true
-    config.setFrom(files("$rootDir/config/detekt.yml"))
 }
 
 dependencies {
@@ -179,12 +184,10 @@ afterEvaluate {
     }
 }
 
-tasks {
-    withType<Test> {
-        useJUnitPlatform()
-        testLogging {
-            showStandardStreams = true
-            events("passed", "skipped", "failed")
-        }
-    }
+detekt {
+    parallel = true
+    buildUponDefaultConfig = true
+    allRules = false
+    autoCorrect = true
+    config.setFrom(files("$rootDir/config/detekt.yml"))
 }
