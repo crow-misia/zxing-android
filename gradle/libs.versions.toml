@@ -14,27 +14,27 @@ dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 
 [versions]
 
-android-gradle-plugin = "8.2.0"
+android-gradle-plugin = "8.2.2"
 
 kotlin = "1.9.22"
 
 kotlinx-coroutines = "1.7.3"
 
-androidx-activity = "1.9.0-alpha01"
+androidx-activity = "1.9.0-alpha02"
 
 androidx-appcompat = "1.7.0-alpha03"
 
-androidx-camera = "1.4.0-alpha03"
+androidx-camera = "1.4.0-alpha04"
 
-androidx-core = "1.13.0-alpha02"
+androidx-core = "1.13.0-alpha04"
 
 androidx-constraintlayout = "2.2.0-alpha13"
 
-androidx-fragment = "1.7.0-alpha07"
+androidx-fragment = "1.7.0-alpha09"
 
-androidx-lifecycle = "2.7.0-rc02"
+androidx-lifecycle = "2.8.0-alpha01"
 
-androidx-navigation = "2.7.6"
+androidx-navigation = "2.8.0-alpha01"
 
 androidx-test-ext-junit = "1.2.0-alpha02"
 
