@@ -14,7 +14,7 @@ dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 
 [versions]
 
-android-gradle-plugin = "8.2.2"
+android-gradle-plugin = "8.3.0"
 
 kotlin = "1.9.22"
 
@@ -108,6 +108,6 @@ junit4 = { group = "junit", name = "junit", version = "4.13.2" }
 
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 
-truth = "com.google.truth:truth:1.4.1"
+truth = "com.google.truth:truth:1.4.2"
 
 com-google-zxing-core = "com.google.zxing:core:3.5.3"
