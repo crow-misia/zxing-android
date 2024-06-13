@@ -26,17 +26,17 @@ androidx-activity = "1.9.0"
 
 androidx-appcompat = "1.7.0"
 
-androidx-camera = "1.4.0-beta01"
+androidx-camera = "1.4.0-beta02"
 
 androidx-core = "1.13.1"
 
 androidx-constraintlayout = "2.2.0-alpha13"
 
-androidx-fragment = "1.8.0-rc01"
+androidx-fragment = "1.8.0"
 
-androidx-lifecycle = "2.8.1"
+androidx-lifecycle = "2.8.2"
 
-androidx-navigation = "2.8.0-beta02"
+androidx-navigation = "2.8.0-beta03"
 
 androidx-test-ext-junit = "1.2.0-rc01"
 
