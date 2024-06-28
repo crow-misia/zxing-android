@@ -110,6 +110,6 @@ junit4 = { group = "junit", name = "junit", version = "4.13.2" }
 
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 
-truth = "com.google.truth:truth:1.4.2"
+truth = "com.google.truth:truth:1.4.3"
 
 com-google-zxing-core = "com.google.zxing:core:3.5.3"
