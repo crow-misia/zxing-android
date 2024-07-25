@@ -20,9 +20,9 @@ kotlin = "2.0.0"
 
 kotlinx-coroutines = "1.8.1"
 
-androidx-annotation = "1.8.0"
+androidx-annotation = "1.8.1"
 
-androidx-activity = "1.9.0"
+androidx-activity = "1.9.1"
 
 androidx-appcompat = "1.7.0"
 
@@ -32,11 +32,11 @@ androidx-core = "1.13.1"
 
 androidx-constraintlayout = "2.2.0-alpha13"
 
-androidx-fragment = "1.8.1"
+androidx-fragment = "1.8.2"
 
-androidx-lifecycle = "2.8.3"
+androidx-lifecycle = "2.8.4"
 
-androidx-navigation = "2.8.0-beta05"
+androidx-navigation = "2.8.0-beta06"
 
 androidx-test-ext-junit = "1.2.1"
 
