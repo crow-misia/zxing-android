@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "app"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.github.crow_misia.zxing_android"
@@ -30,9 +30,6 @@ android {
     }
 
     buildTypes {
-        debug {
-            isMinifyEnabled = true
-        }
         release {
             isMinifyEnabled = true
         }
