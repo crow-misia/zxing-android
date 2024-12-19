@@ -1,6 +1,6 @@
 # zxing-android
 
-[![Android CI](https://github.com/crow-misia/zxing-android/actions/workflows/android.yml/badge.svg?branch=main)](https://github.com/crow-misia/zxing-android/actions/workflows/android.yml)
+[![Android CI](https://github.com/crow-misia/zxing-android/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/crow-misia/zxing-android/actions/workflows/build.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.crow-misia.zxing-android/zxing-android.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.crow-misia.zxing-android%22%20AND%20a:%22zxing-android%22)
 [![License](https://img.shields.io/github/license/crow-misia/zxing-android)](LICENSE)
 
