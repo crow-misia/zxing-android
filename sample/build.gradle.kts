@@ -10,12 +10,12 @@ plugins {
 
 android {
     namespace = "app"
-    compileSdk = 35
+    compileSdk = Build.COMPILE_SDK
 
     defaultConfig {
         applicationId = "com.github.crow_misia.zxing_android"
         minSdk = 23
-        targetSdk = 34
+        targetSdk = Build.TARGET_SDK
         versionCode = 1
         versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

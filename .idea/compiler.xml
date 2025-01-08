@@ -2,6 +2,9 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="17">
+      <module name="zxing-android.buildSrc" target="21" />
+      <module name="zxing-android.buildSrc.main" target="21" />
+      <module name="zxing-android.buildSrc.test" target="21" />
       <module name="zxing-android.sample" target="21" />
       <module name="zxing-android.zxing-android" target="21" />
     </bytecodeTargetLevel>
