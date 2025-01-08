@@ -1,7 +1,7 @@
 object Maven {
     const val GROUP_ID = "io.github.crow-misia.zxing-android"
     const val ARTIFACT_ID = "zxing-android"
-    const val VERSION = "0.6.0"
+    const val VERSION = "0.7.0"
     const val DESCRIPTION = "ZXing for Android"
     const val GITHUB_REPOSITORY = "crow-misia/zxing-android"
     const val LICENSE_NAME = "The Apache Software License, Version 2.0"
