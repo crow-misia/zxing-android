@@ -1,8 +1,8 @@
 # zxing-android
 
-[![Android CI](https://github.com/crow-misia/zxing-android/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/crow-misia/zxing-android/actions/workflows/build.yml)
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.crow-misia.zxing-android/zxing-android.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.crow-misia.zxing-android%22%20AND%20a:%22zxing-android%22)
-[![License](https://img.shields.io/github/license/crow-misia/zxing-android)](LICENSE)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/crow-misia/zxing-android/build.yml)](https://github.com/crow-misia/zxing-android/actions/workflows/build.yml)
+[![Maven Central Version](https://img.shields.io/maven-central/v/io.github.crow-misia.zxing-android/zxing-android)](https://central.sonatype.com/artifact/io.github.crow-misia.zxing-android/zxing-android)
+[![GitHub License](https://img.shields.io/github/license/crow-misia/zxing-android)](LICENSE)
 
 ZXing Android.
 
@@ -12,7 +12,7 @@ ZXing Android.
 
 Add dependencies (you can also add other modules that you need):
 
-`${latest.version}` is [![Download](https://img.shields.io/maven-central/v/io.github.crow-misia.zxing-android/zxing-android.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.crow-misia.zxing-android%22%20AND%20a:%22zxing-android%22)
+`${latest.version}` is [![Maven Central Version](https://img.shields.io/maven-central/v/io.github.crow-misia.zxing-android/zxing-android)](https://central.sonatype.com/artifact/io.github.crow-misia.zxing-android/zxing-android)
 
 ```groovy
 dependencies {
