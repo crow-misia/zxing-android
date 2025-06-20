@@ -46,7 +46,7 @@ kotlinx-coroutines = "1.10.2"
 
 maven-publish = "0.32.0"
 
-robolectric = "4.14.1"
+robolectric = "4.15"
 
 truth = "1.4.4"
 
