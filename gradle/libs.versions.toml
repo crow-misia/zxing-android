@@ -40,13 +40,13 @@ dokka = "2.0.0"
 
 junit4 = "4.13.2"
 
-kotlin = "2.1.21"
+kotlin = "2.2.0"
 
 kotlinx-coroutines = "1.10.2"
 
-maven-publish = "0.32.0"
+maven-publish = "0.33.0"
 
-robolectric = "4.15"
+robolectric = "4.15.1"
 
 truth = "1.4.4"
 
