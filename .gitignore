@@ -52,6 +52,9 @@ node_modules/
 # Kotlin
 .kotlin
 
+# Lefthook
+lefthook-local.*
+
 # not ignore
 !.idea/codeStyleSettings.xml
 !.idea/findbugs-idea.xml
