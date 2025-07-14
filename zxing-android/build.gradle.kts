@@ -1,5 +1,4 @@
 import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
-import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -45,15 +44,15 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = Build.jvmTarget
+        targetCompatibility = Build.jvmTarget
     }
 }
 
 kotlin {
     compilerOptions {
         javaParameters = true
-        jvmTarget = JvmTarget.JVM_11
+        jvmTarget = JvmTarget.fromTarget(Build.jvmTarget.toString())
     }
 }
 
@@ -85,7 +84,7 @@ mavenPublishing {
         sourcesJar = true,
     ))
 
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    publishToMavenCentral()
 
     coordinates(Maven.GROUP_ID, Maven.ARTIFACT_ID, Maven.VERSION)
 
