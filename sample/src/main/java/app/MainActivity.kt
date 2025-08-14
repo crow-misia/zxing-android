@@ -1,6 +1,8 @@
 package app
 
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -30,17 +32,6 @@ class MainActivity : AppCompatActivity() {
         activityMainBinding.fragmentContainer.postDelayed({
             hideSystemUI()
         }, IMMERSIVE_FLAG_TIMEOUT)
-    }
-
-    @Suppress("OVERRIDE_DEPRECATION")
-    override fun onBackPressed() {
-        // Workaround for Android Q memory leak issue in IRequestFinishCallback$Stub.
-        // (https://issuetracker.google.com/issues/139738913)
-        if (onBackPressedDispatcher.hasEnabledCallbacks()) {
-            super.onBackPressed()
-        } else {
-            finishAfterTransition()
-        }
     }
 
     private fun hideSystemUI() {
