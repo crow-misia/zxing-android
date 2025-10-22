@@ -36,7 +36,7 @@ androidx-window = "1.5.0"
 
 detekt = "1.23.8"
 
-dokka = "2.0.0"
+dokka = "2.1.0"
 
 junit4 = "4.13.2"
 
