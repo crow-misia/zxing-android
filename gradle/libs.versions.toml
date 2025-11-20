@@ -4,7 +4,7 @@
 
 android-gradle-plugin = "8.13.1"
 
-androidx-activity = "1.11.0"
+androidx-activity = "1.12.0"
 
 androidx-annotation = "1.9.1"
 
@@ -18,7 +18,7 @@ androidx-core = "1.17.0"
 
 androidx-fragment = "1.8.9"
 
-androidx-lifecycle = "2.9.4"
+androidx-lifecycle = "2.10.0"
 
 androidx-navigation = "2.9.6"
 
@@ -32,7 +32,7 @@ androidx-test-rules = "1.7.0"
 
 androidx-test-runner = "1.7.0"
 
-androidx-window = "1.5.0"
+androidx-window = "1.5.1"
 
 detekt = "1.23.8"
 
